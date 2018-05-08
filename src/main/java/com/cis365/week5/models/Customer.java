@@ -1,4 +1,4 @@
-package com.cis365.week5;
+package com.cis365.week5.models;
 
 import javax.persistence.*;
 

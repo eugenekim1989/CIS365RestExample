@@ -13,7 +13,8 @@
         <property name="connection.username">system</property>
         <property name="connection.password">oracle</property>
         <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
-        <mapping class="com.cis365.week5.Customer"/>
+        <mapping class="com.cis365.week5.models.Customer"/>
+        <mapping class="com.cis365.week5.models.Rep"/>
     </session-factory>
 
 </hibernate-configuration>

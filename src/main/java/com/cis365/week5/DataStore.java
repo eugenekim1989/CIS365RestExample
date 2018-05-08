@@ -3,6 +3,8 @@ package com.cis365.week5;
 import java.util.List;
 import java.util.Iterator;
 
+import com.cis365.week5.models.Customer;
+import com.cis365.week5.models.Rep;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -56,6 +58,19 @@ public class DataStore {
             return customers;
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return null;
+    }
+
+    public static Rep findRepById(String repNum) {
+        Session session = getSessionFactory().openSession();
+
+        try {
+            return (Rep) session.get(Rep.class, repNum);
+        } catch (HibernateException e) {
             e.printStackTrace();
         } finally {
             session.close();
