@@ -1,7 +1,6 @@
 package com.cis365.week5;
 
 import java.util.List;
-import java.util.Iterator;
 
 import com.cis365.week5.models.Customer;
 import com.cis365.week5.models.Rep;
@@ -41,23 +40,24 @@ public class DataStore {
     }
 
     public static List<Customer> listCustomers( ) {
-        System.out.print("listCustomers()");
-
         Session session = getSessionFactory().openSession();
-        Transaction tx = null;
 
         try {
-            tx = session.beginTransaction();
-            List customers = session.createQuery("FROM Customer").list();
-            for (Iterator iterator = customers.iterator(); iterator.hasNext(); ) {
-                Customer customer = (Customer) iterator.next();
-                System.out.print("Name: " + customer.getCustmomerName());
-                System.out.print("  Address: " + customer.getStreetAddress());
-            }
-            tx.commit();
-            return customers;
-        } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
+            return session.createQuery("FROM Customer").list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return null;
+    }
+
+    public static List<Rep> listReps() {
+        Session session = getSessionFactory().openSession();
+
+        try {
+            return session.createQuery("FROM Rep").list();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             session.close();
@@ -71,6 +71,29 @@ public class DataStore {
         try {
             return (Rep) session.get(Rep.class, repNum);
         } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return null;
+    }
+
+    public static Rep updateRep(String repNum, Rep repToUpdate) {
+        Session session = getSessionFactory().openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            Rep existing = findRepById(repNum);
+            if (existing != null && repNum == repToUpdate.getId())
+                existing = repToUpdate;
+            tx.commit();
+            return repToUpdate;
+        }  catch (HibernateException e) {
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }catch (Exception e) {
             e.printStackTrace();
         } finally {
             session.close();

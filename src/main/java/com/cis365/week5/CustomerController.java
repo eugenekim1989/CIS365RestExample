@@ -10,7 +10,8 @@ import java.util.List;
 public class CustomerController {
 
     @RequestMapping("/customers")
-    public List<Customer> customers() {
+    public List<Customer> customers()
+    {
         return DataStore.listCustomers();
     }
 }
