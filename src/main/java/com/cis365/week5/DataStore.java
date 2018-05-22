@@ -16,18 +16,18 @@ public class DataStore {
 
     private static SessionFactory buildSessionFactory() {
         try {
-            /*
             String dbName = System.getenv("RDS_DB_NAME");
-            String userName = System.getenv("RDS_USERNAME");
-            String password = System.getenv("RDS_PASSWORD");
             String hostname = System.getenv("RDS_HOSTNAME");
             String port = System.getenv("RDS_PORT");
             String jdbcUrl = "jdbc:oracle:thin:@" + hostname + ":" + port + ":" + dbName;
-            */
 
             // Create the SessionFactory from hibernate.cfg.xml
             Configuration cfg = new Configuration();
             cfg.configure("hibernate.cfg.xml");//populates the data of the configuration file
+            cfg.setProperty("hibernate.connection.url", jdbcUrl);
+            cfg.setProperty("hibernate.connection.username", System.getenv("RDS_USERNAME"));
+            cfg.setProperty("hibernate.connection.password", System.getenv("RDS_PASSWORD"));
+
             return cfg.buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
