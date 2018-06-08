@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import java.util.List;
 
 @RestController
-public class RepController {
+public class StarshipController {
 
     @GetMapping("/rep")
     public List<Rep> reps() {
